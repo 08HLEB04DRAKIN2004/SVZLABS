@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchHazardousJobs } from '../redux/slices/hazardousJob';
 import { Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
 
-const HazardousJobsTable = () => {
+const HazardousJobTable = () => {
     const dispatch = useDispatch();
     const hazardousJobs = useSelector(state => state.hazardousJobs.hazardousJobs);
 
@@ -17,15 +17,17 @@ const HazardousJobsTable = () => {
             <Table>
                 <TableHead>
                     <TableRow>
-                        <TableCell>Название</TableCell>
+                        <TableCell>ID</TableCell>
+                        <TableCell>Название работы</TableCell>
                         <TableCell>Описание</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {hazardousJobs?.map(job => (
-                        <TableRow key={job._id}>
-                            <TableCell>{job.jobTitle}</TableCell>
-                            <TableCell>{job.description}</TableCell>
+                    {hazardousJobs.map(hazardousJob => (
+                        <TableRow key={hazardousJob._id}>
+                            <TableCell>{hazardousJob._id}</TableCell>
+                            <TableCell>{hazardousJob.jobTitle}</TableCell>
+                            <TableCell>{hazardousJob.description}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
@@ -34,4 +36,4 @@ const HazardousJobsTable = () => {
     );
 };
 
-export default HazardousJobsTable;
+export default HazardousJobTable;

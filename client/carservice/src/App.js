@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Navigate, Routes, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAuthMe, selectIsAuth } from './redux/slices/auth';
 import { CssBaseline, Box } from '@mui/material';
-
+import './App.css'
 import LoginPage from './components/login';
 import RegistrationPage from './components/register';
 import Header from './components/header';
@@ -12,15 +12,20 @@ import Footer from './components/footer';
 import EmployeeAccess from './components/employeeAccess';
 import Position from './components/position';
 import HazardousJobs from './components/hazardousJob';
-import DepartmentPage from './components/departmentPage'; // Импортируем компонент DepartmentPage
+import DepartmentPage from './components/departmentPage';
 import Admin from './components/admin'
 import AdminEmployeeAccess from './components/adminemployeeaccess';
+import DepartmentAdmin from './components/departmentAdmin';
+import AdminPosition from './components/positionadmin';
+import HazardousJobjAdmin from './components/hazardousJobjadmin';
+
 function App() {
   const dispatch = useDispatch();
   const isAuth = useSelector(selectIsAuth);
 
-  React.useEffect(() => {
-    if (window.localStorage.getItem('token')) {
+  useEffect(() => {
+    const token = window.localStorage.getItem('token');
+    if (token) {
       dispatch(fetchAuthMe());
     }
   }, [dispatch]);
@@ -36,13 +41,15 @@ function App() {
             <Route path='/employee-access' element={<EmployeeAccess />} />
             <Route path='/positions' element={<Position />} />
             <Route path='/hazardous-jobs' element={<HazardousJobs />} />
-            <Route path="/admin" element={<Admin />} /> {/* Роут для страницы администратора */}
-            <Route path="/Admin-Employee-Access" element={<AdminEmployeeAccess />} /> {/* Роут для страницы администратора */}
-            <Route path='/departments' element={<DepartmentPage />} /> {/* Добавляем маршрут для страницы с департаментами */}
-            {!isAuth && <Route path='/registration' element={<RegistrationPage/>} />}
-            {!isAuth && <Route path='/login' element={<LoginPage/>} />}
-            {isAuth && <Route path="*" element={<Navigate to="/" />} />}
-            {!isAuth && <Route path="*" element={<Navigate to="/login" />} />}
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/Admin-Employee-Access" element={<AdminEmployeeAccess />} />
+            <Route path="/admin-positions" element={<AdminPosition/>} />
+            <Route path='/departments' element={<DepartmentPage />} />
+            <Route path="/hazardous-jobs-admin" element={<HazardousJobjAdmin/>} />
+            <Route path='/registration' element={<RegistrationPage/>} />
+            <Route path='/login' element={<LoginPage/>} />
+            <Route path='/admin-departments' element={<DepartmentAdmin />} />
+            {isAuth ? <Route path="*" element={<Navigate to="/" />} /> : <Route path="*" element={<Navigate to="/login" />} />}
           </Routes>
         </Box>
         <Footer />
@@ -51,4 +58,4 @@ function App() {
   );
 }
 
-export default App;
+export default App

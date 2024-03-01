@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Link } from '@mui/material';
+import { Typography, Link, List, ListItem, ListItemText } from '@mui/material';
 
 const HomePage = () => {
     return (
@@ -16,16 +16,23 @@ const HomePage = () => {
             <Typography variant="h4" gutterBottom>
                 Основные функции системы:
             </Typography>
-            <ul>
-                <li>Регистрация сотрудников и учет их персональных данных.</li>
-                <li>Управление допуском сотрудников к опасным видам работ.</li>
-                <li>Отслеживание прохождения обучения по безопасности и получения необходимых сертификатов.</li>
-                <li>Генерация отчетов о состоянии допуска сотрудников к работам.</li>
-                <li>Интеграция с другими системами учета и безопасности.</li>
-            </ul>
-            <Typography variant="body1" style={{ marginTop: '2rem' }}>
-                Чтобы узнать больше о возможностях системы, перейдите на страницу <Link href="/employee-access">Учет допуска сотрудников</Link>.
-            </Typography>
+            <List>
+                <ListItem>
+                    <ListItemText primary="Регистрация сотрудников и учет их персональных данных." />
+                </ListItem>
+                <ListItem>
+                    <ListItemText primary="Управление допуском сотрудников к опасным видам работ." />
+                </ListItem>
+                <ListItem>
+                    <ListItemText primary="Отслеживание прохождения обучения по безопасности и получения необходимых сертификатов." />
+                </ListItem>
+                <ListItem>
+                    <ListItemText primary="Генерация отчетов о состоянии допуска сотрудников к работам." />
+                </ListItem>
+                <ListItem>
+                    <ListItemText primary="Интеграция с другими системами учета и безопасности." />
+                </ListItem>
+            </List>
         </div>
     );
 };

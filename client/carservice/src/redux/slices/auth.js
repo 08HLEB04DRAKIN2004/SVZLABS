@@ -27,9 +27,10 @@ const authSlice = createSlice({
     reducers: {
         logout: (state) => {
             state.data = null;
-            state.status = 'null'
+            state.status = null;
         }
     },
+    
     extraReducers: (builder) => {
         builder
             .addCase(fetchAuth.pending, (state) => {

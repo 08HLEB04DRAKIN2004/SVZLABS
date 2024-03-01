@@ -46,7 +46,7 @@ export const update = async (req, res) => {
 
         await DepartmentModel.updateOne(
             {
-                _id: departmentId,
+                _id: departmentId
             },
             {
                 name: req.body.name,

@@ -38,28 +38,27 @@ export const remove = async (req, res) => {
 };
 export const update = async (req, res) => {
     try {
-        const employeeAccessId = req.params.id;
-        const { granted, name } = req.body;
-        let employeeAccess = await EmployeeAccessModel.findById(employeeAccessId);
+        const accessId = req.params.id;
 
-        if (!employeeAccess) {
-            return res.status(404).json({
-                message: 'Employee access not found',
-            });
-        }
+        await EmployeeAccessModel.updateOne(
+            { _id: accessId },
+            {
+                name: req.body.name,
+                granted: req.body.granted,
+                // Другие поля, которые вы хотите обновить
+            }
+        );
 
-        employeeAccess.granted = granted;
-        await employeeAccess.save();
-
-        res.json(employeeAccess);
+        res.json({
+            success: true,
+        });
     } catch (err) {
-        console.log(err);
+        console.error(err);
         res.status(500).json({
             message: 'Update attempt failed',
         });
     }
 };
-
 export const getOne = async (req, res) => {
     try {
         const employeeAccessId = req.params.id;

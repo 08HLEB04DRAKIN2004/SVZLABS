@@ -1,10 +1,14 @@
-import models from '../Models/models.js'
+import models from '../Models/models.js';
 const PositionModel = models.PositionModel;
 
 export const create = async (req, res) => {
     try {
-        const { title } = req.body;
-        const position = await PositionModel.create({ title });
+        const doc = new PositionModel({
+            title: req.body.title,
+        });
+
+        const position = await doc.save();
+
         res.json(position);
     } catch (err) {
         console.log(err);
@@ -17,18 +21,17 @@ export const create = async (req, res) => {
 export const remove = async (req, res) => {
     try {
         const positionId = req.params.id;
-        const position = await PositionModel.findByPk(positionId);
-        
-        if (!position) {
+
+        const doc = await PositionModel.findByIdAndDelete(positionId);
+
+        if (!doc) {
             return res.status(404).json({
-                message: 'Position not found',
+                message: 'Position doesn\'t exist',
             });
         }
-        
-        await position.destroy();
+
         res.json({
             success: true,
-            message: 'Position deleted successfully',
         });
     } catch (err) {
         console.log(err);
@@ -41,19 +44,19 @@ export const remove = async (req, res) => {
 export const update = async (req, res) => {
     try {
         const positionId = req.params.id;
-        const { title } = req.body;
-        let position = await PositionModel.findByPk(positionId);
 
-        if (!position) {
-            return res.status(404).json({
-                message: 'Position not found',
-            });
-        }
+        await PositionModel.updateOne(
+            {
+                _id: positionId
+            },
+            {
+                title: req.body.title,
+            },
+        );
 
-        position.title = title;
-        await position.save();
-
-        res.json(position);
+        res.json({
+            success: true,
+        });
     } catch (err) {
         console.log(err);
         res.status(500).json({
@@ -65,15 +68,14 @@ export const update = async (req, res) => {
 export const getOne = async (req, res) => {
     try {
         const positionId = req.params.id;
-        const position = await PositionModel.findByPk(positionId);
 
-        if (!position) {
-            return res.status(404).json({
-                message: 'Position not found',
-            });
+        const doc = await PositionModel.findById(positionId);
+
+        if (doc) {
+            res.json(doc);
+        } else {
+            res.status(404).json({ message: 'Position not found' });
         }
-
-        res.json(position);
     } catch (err) {
         console.log(err);
         res.status(500).json({
@@ -85,6 +87,7 @@ export const getOne = async (req, res) => {
 export const getAll = async (req, res) => {
     try {
         const positions = await PositionModel.find();
+
         res.json(positions);
     } catch (err) {
         console.log(err);

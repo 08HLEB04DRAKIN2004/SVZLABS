@@ -17,12 +17,14 @@ const PositionTable = () => {
             <Table>
                 <TableHead>
                     <TableRow>
+                        <TableCell>ID</TableCell>
                         <TableCell>Название должности</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {positions.map(position => (
                         <TableRow key={position._id}>
+                            <TableCell>{position._id}</TableCell>
                             <TableCell>{position.title}</TableCell>
                         </TableRow>
                     ))}

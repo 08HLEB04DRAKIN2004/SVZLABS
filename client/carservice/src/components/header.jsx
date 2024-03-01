@@ -1,4 +1,3 @@
-// В вашем файле Header.js
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
@@ -41,7 +40,7 @@ function Header() {
     const isAdmin = userData && userData.role === 'admin';
 
     return (
-        <AppBar position="static" sx={{ backgroundColor: '#aaaa' }}>
+        <AppBar position="static" sx={{ backgroundColor: '#333' }}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <Link to="/" style={{ textDecoration: 'none', color: 'inherit', marginRight: '20px' }}>
@@ -59,7 +58,6 @@ function Header() {
                     <Link to="/departments" style={{ textDecoration: 'none', color: 'inherit', marginRight: '20px' }}>
                         <Typography variant="body1">Отделы</Typography>
                     </Link>
-                    {/* Проверяем, является ли пользователь администратором, прежде чем отображать ссылку на страницу администратора */}
                     {isAdmin && (
                         <Link to="/admin" style={{ textDecoration: 'none', color: 'inherit', marginRight: '20px' }}>
                             <Typography variant="body1">Admin</Typography>
